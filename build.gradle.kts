@@ -50,6 +50,7 @@ subprojects {
 
         defaultConfig {
             minSdk = 24
+            //noinspection ExpiredTargetSdkVersion
             targetSdk = 31
         }
 

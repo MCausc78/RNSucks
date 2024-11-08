@@ -1,4 +1,4 @@
-package com.github.yournamehere
+package ua.mcausc78.rnsucks
 
 import android.content.Context
 import com.aliucord.Utils
@@ -38,6 +38,10 @@ class MyFirstCommand : Plugin() {
                 val name = ctx.getStringOrDefault("name", "World")
                 CommandsAPI.CommandResult("Hello $name!")
             }
+        }
+
+        commands.registerCommand("fish", "Who knows what it does") { ctx ->
+            CommandsAPI.CommandResult("🐟")
         }
     }
 
