@@ -1,19 +1,26 @@
-# `Aliucord Plugin Repo Template`
+# RNSucks
 
-Template for an [Aliucord](https://github.com/Aliucord) plugin repo
+Some plugins for Aliucord made for myself.
 
-⚠️ Make sure you check "Include all branches" when using this template
+## Usage
 
- 
-## Getting started with writing your first plugin
+1. Install [Aliucord](https://github.com/Aliucord/Aliucord)
+2. Connect device with Aliucord installed to your computer (USB debugging required)
+3. Run following commands in terminal:
 
-This template includes 2 example plugins demonstrating commands and patches which you can find in the ExamplePlugins folder.
+On Linux / macOS:
+```bash
+$ git clone https://github.com/MCausc78/RNSucks
+$ cd RNSucks
+$ ./gradlew deployWithAdb
+```
 
-1. Open the root build.gradle.kts, read the comments and replace all the placeholders
-2. Familiarize yourself with the project structure. Most files are commented
-3. Build or deploy your first plugin using:
-   - Windows: `.\gradlew.bat MyFirstCommand:make` or `.\gradlew.bat MyFirstCommand:deployWithAdb`
-   - Linux & Mac: `./gradlew MyFirstCommand:make` or `./gradlew MyFirstCommand:deployWithAdb`
+On Windows:
+```bash
+$ git clone https://github.com/MCausc78/RNSucks
+$ cd RNSucks
+$ .\gradlew.bat deployWithAdb
+```
 
 ## License
 
