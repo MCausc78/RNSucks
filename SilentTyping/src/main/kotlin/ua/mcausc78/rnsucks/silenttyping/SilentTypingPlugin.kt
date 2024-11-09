@@ -37,12 +37,7 @@ class SilentTypingPlugin : Plugin() {
                 ),
             )
         ) { ctx ->
-            silentlyTyping = if (ctx.containsArg("toggle")) {
-                !silentlyTyping
-            } else {
-                ctx.getBool("toggle")!!
-            }
-
+            silentlyTyping = ctx.getBool("toggle") ?: !silentlyTyping
             val content = if (silentlyTyping) {
                 "Toggled silent typing on"
             } else {
