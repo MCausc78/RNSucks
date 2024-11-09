@@ -10,8 +10,6 @@ buildscript {
         maven("https://maven.aliucord.com/snapshots")
         // Shitpack which still contains some Aliucord dependencies for now. TODO: Remove
         maven("https://jitpack.io")
-
-        gradlePluginPortal()
     }
 
     dependencies {
@@ -20,8 +18,6 @@ buildscript {
         classpath("com.aliucord:gradle:main-SNAPSHOT")
         // Kotlin support. Remove if you want to use Java
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
-        // Shadow dependencies
-        classpath("com.gradleup.shadow:shadow-gradle-plugin:8.3.5")
     }
 }
 
