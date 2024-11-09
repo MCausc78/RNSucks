@@ -1,4 +1,4 @@
-rootProject.name = "AliucordPlugins"
+rootProject.name = "RNSucks"
 
 // This file sets what projects are included. Every time you add a new project, you must add it
 // to the includes below.
@@ -6,5 +6,7 @@ rootProject.name = "AliucordPlugins"
 // Plugins are included like this
 include(
     "AuthorizedAppsCrashFix",
-    "SilentTyping"
+    "IntlHasher",
+    "NoBlockedMessages",
+    "SilentTyping",
 )

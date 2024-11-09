@@ -1,5 +1,6 @@
 import com.aliucord.gradle.AliucordExtension
 import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
 
 buildscript {
     repositories {
@@ -9,6 +10,8 @@ buildscript {
         maven("https://maven.aliucord.com/snapshots")
         // Shitpack which still contains some Aliucord dependencies for now. TODO: Remove
         maven("https://jitpack.io")
+
+        gradlePluginPortal()
     }
 
     dependencies {
@@ -17,6 +20,8 @@ buildscript {
         classpath("com.aliucord:gradle:main-SNAPSHOT")
         // Kotlin support. Remove if you want to use Java
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
+        // Shadow dependencies
+        classpath("com.gradleup.shadow:shadow-gradle-plugin:8.3.5")
     }
 }
 
@@ -28,9 +33,11 @@ allprojects {
     }
 }
 
-fun Project.aliucord(configuration: AliucordExtension.() -> Unit) = extensions.getByName<AliucordExtension>("aliucord").configuration()
+fun Project.aliucord(configuration: AliucordExtension.() -> Unit) =
+    extensions.getByName<AliucordExtension>("aliucord").configuration()
 
-fun Project.android(configuration: BaseExtension.() -> Unit) = extensions.getByName<BaseExtension>("android").configuration()
+fun Project.android(configuration: BaseExtension.() -> Unit) =
+    extensions.getByName<BaseExtension>("android").configuration()
 
 subprojects {
     apply(plugin = "com.android.library")
@@ -88,3 +95,19 @@ subprojects {
 task<Delete>("clean") {
     delete(rootProject.buildDir)
 }
+
+//task("deployWithAdb") {
+//    group = "aliucord"
+//    dependsOn("package")
+//
+//    val patchesPath = buildDir.resolve("patches.zip").absolutePath
+//    val remotePatchesDir = "/storage/emulated/0/Android/data/com.aliucord.manager/cache/patches"
+//
+//    doLast {
+//        val android = project(":Aliucord").extensions
+//            .getByName<LibraryExtension>("android")
+//
+//        exec { commandLine(android.adbExecutable, "shell", "mkdir", "-p", remotePatchesDir) }
+//        exec { commandLine(android.adbExecutable, "push", patchesPath, "$remotePatchesDir/$version.custom.zip") }
+//    }
+//}

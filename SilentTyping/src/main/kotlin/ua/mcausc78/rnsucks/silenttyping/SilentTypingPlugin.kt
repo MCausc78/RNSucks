@@ -33,7 +33,7 @@ class SilentTypingPlugin : Plugin() {
                 Utils.createCommandOption(
                     ApplicationCommandType.BOOLEAN,
                     "toggle",
-                    "Disable or enable"
+                    "Disable or enable",
                 ),
             )
         ) { ctx ->
