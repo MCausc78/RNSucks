@@ -81,9 +81,9 @@ class SummariesPlugin : Plugin() {
             val guildName = guild?.name ?: "?"
 
             if (event.summaries.isEmpty()) {
-                logger.verbose("No summaries were added to $channelName (ID: $channelId) in $guildName (ID: $guildId)")
+                logger.verbose("No summaries were added in $channelName (ID: $channelId) at $guildName (ID: $guildId)")
             } else {
-                logger.verbose("Summaries updated in $channelName (ID: $channelId) in $guildName (ID: $guildId)")
+                logger.verbose("Summaries updated in $channelName (ID: $channelId) at $guildName (ID: $guildId)")
             }
 
             val summaries = this.summaries[channelId]
@@ -104,7 +104,7 @@ class SummariesPlugin : Plugin() {
                     }
                 }
 
-                summaries.sortBy { it.id.toLong() }
+                summaries.sortBy { it.id }
             }
         }
 
