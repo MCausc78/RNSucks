@@ -1,5 +1,5 @@
 version = "1.0.0"
-description = "Adds command to hash strings in discord-intl way"
+description = "Add 'Summaries' feature from new Discord clients."
 
 aliucord {
     // Changelog of your plugin
@@ -10,6 +10,3 @@ aliucord {
     excludeFromUpdaterJson.set(true)
 }
 
-dependencies {
-    implementation("com.joom.xxhash:xxhash-android:1.2.0")
-}

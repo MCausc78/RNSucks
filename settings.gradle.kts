@@ -6,7 +6,7 @@ rootProject.name = "RNSucks"
 // Plugins are included like this
 include(
     "AuthorizedAppsCrashFix",
-    "IntlHasher",
     "NoBlockedMessages",
     "SilentTyping",
+    "Summaries",
 )

@@ -11,6 +11,7 @@ import com.discord.api.commands.ApplicationCommandType
 import com.discord.api.user.TypingUser
 import com.discord.models.domain.ModelUserRelationship
 import com.discord.stores.StoreStream
+import com.discord.stores.StoreUserRelationships
 import com.discord.stores.StoreUserTyping
 
 
@@ -19,6 +20,11 @@ class NoBlockedMessagesPlugin : Plugin() {
     private val log: Logger = Logger("RNSucks.NoBlockedMessagesPlugin")
 
     override fun start(context: Context) {
+        val ensureRelationshipLoaded =
+            StoreUserRelationships::class.java.getDeclaredMethod("ensureRelationshipLoaded").apply {
+                isAccessible = true
+            }
+
         commands.registerCommand(
             "local-block", "Blocks a user locally", listOf(
                 Utils.createCommandOption(
@@ -33,8 +39,8 @@ class NoBlockedMessagesPlugin : Plugin() {
             val target = ctx.getRequiredUser("target")
 
             val relationshipStore = StoreStream.getUserRelationships()
-            val relationships = relationshipStore.relationships
-            val oldRelationship = relationships[target.id] ?: ModelUserRelationship.TYPE_NONE
+            val oldRelationship =
+                relationshipStore.relationships[target.id] ?: ModelUserRelationship.TYPE_NONE
 
             if (oldRelationship == ModelUserRelationship.TYPE_BLOCKED) {
                 return@registerCommand CommandsAPI.CommandResult(
@@ -44,7 +50,8 @@ class NoBlockedMessagesPlugin : Plugin() {
                 )
             }
 
-            relationships[target.id] = ModelUserRelationship.TYPE_BLOCKED
+            (ensureRelationshipLoaded.invoke(relationshipStore) as StoreUserRelationships.UserRelationshipsState.Loaded).relationships[target.id] =
+                ModelUserRelationship.TYPE_BLOCKED
             relationshipStore.markChanged()
 
             val content = when (oldRelationship) {
@@ -83,7 +90,8 @@ class NoBlockedMessagesPlugin : Plugin() {
                 )
             }
 
-            relationships[target.id] = ModelUserRelationship.TYPE_NONE
+            (ensureRelationshipLoaded.invoke(relationshipStore) as StoreUserRelationships.UserRelationshipsState.Loaded).relationships[target.id] =
+                ModelUserRelationship.TYPE_NONE
             relationshipStore.markChanged()
 
             CommandsAPI.CommandResult("Unblocked `${target.username}` locally.", null, false)

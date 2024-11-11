@@ -1,6 +1,5 @@
 import com.aliucord.gradle.AliucordExtension
 import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.LibraryExtension
 
 buildscript {
     repositories {
