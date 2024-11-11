@@ -1,6 +1,9 @@
 package ua.mcausc78.rnsucks.noblockedmessages
 
 import android.content.Context
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import com.aliucord.Logger
 import com.aliucord.Utils
 import com.aliucord.annotations.AliucordPlugin
@@ -9,10 +12,13 @@ import com.aliucord.entities.Plugin
 import com.aliucord.patcher.*
 import com.discord.api.commands.ApplicationCommandType
 import com.discord.api.user.TypingUser
+import com.discord.databinding.WidgetChatListAdapterItemBlockedBinding
 import com.discord.models.domain.ModelUserRelationship
 import com.discord.stores.StoreStream
 import com.discord.stores.StoreUserRelationships
 import com.discord.stores.StoreUserTyping
+import com.discord.widgets.chat.list.adapter.WidgetChatListAdapterItemBlocked
+import com.discord.widgets.chat.list.entries.ChatListEntry
 
 
 @AliucordPlugin(requiresRestart = false)
@@ -20,6 +26,10 @@ class NoBlockedMessagesPlugin : Plugin() {
     private val log: Logger = Logger("RNSucks.NoBlockedMessagesPlugin")
 
     override fun start(context: Context) {
+        val blockedBinding =
+            WidgetChatListAdapterItemBlocked::class.java.getDeclaredField("binding").apply {
+                isAccessible = true
+            }
         val ensureRelationshipLoaded =
             StoreUserRelationships::class.java.getDeclaredMethod("ensureRelationshipLoaded").apply {
                 isAccessible = true
@@ -118,10 +128,25 @@ class NoBlockedMessagesPlugin : Plugin() {
                 param.result = null
             }
         }
+
+        patcher.instead<WidgetChatListAdapterItemBlocked>(
+            "onConfigure",
+            Int::class.java,
+            ChatListEntry::class.java
+        ) { param ->
+            val root =
+                (blockedBinding.get(param.thisObject) as WidgetChatListAdapterItemBlockedBinding).root
+            root.visibility = View.GONE
+
+            val lp = LayoutParams(0, 0)
+            root.layoutParams = lp
+
+            null
+        }
     }
 
     override fun stop(context: Context) {
-        // Remove all patches
+        commands.unregisterAll()
         patcher.unpatchAll()
     }
 }
